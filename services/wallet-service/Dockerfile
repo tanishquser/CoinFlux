@@ -7,4 +7,7 @@ RUN npm install
 
 COPY . .
 
+# Expose port (optional, for future HTTP endpoints)
+EXPOSE 3002
+
 CMD ["npm", "run", "dev"]
