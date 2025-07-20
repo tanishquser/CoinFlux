@@ -1,0 +1,82 @@
+openapi: 3.0.0
+info:
+  title: User Service API
+  version: 1.0.0
+  description: API for user registration and login in the Fintech Wallet.
+
+servers:
+  - url: http://localhost:3001
+    description: Local development server
+
+paths:
+  /api/auth/register:
+    post:
+      summary: Register a new user
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - password
+              properties:
+                name:
+                  type: string
+                  example: "Tanishq Gupta"
+                email:
+                  type: string
+                  format: email
+                  example: "tanishq@example.com"
+                password:
+                  type: string
+                  format: password
+                  example: "StrongPassword123"
+      responses:
+        '201':
+          description: User registered successfully
+        '400':
+          description: Missing fields or invalid input
+        '409':
+          description: Email already exists
+
+  /api/auth/login:
+    post:
+      summary: Login and receive a JWT token
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "tanishq@example.com"
+                password:
+                  type: string
+                  format: password
+                  example: "StrongPassword123"
+      responses:
+        '200':
+          description: Login successful, returns JWT token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6..."
+        '401':
+          description: Invalid email or password

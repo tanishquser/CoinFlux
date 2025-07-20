@@ -1,0 +1,148 @@
+openapi: 3.0.0
+info:
+  title: Wallet Service API
+  version: 1.0.0
+  description: APIs to manage wallets — fund, debit, transfer, and view transactions
+
+servers:
+  - url: http://localhost:3002/api/wallet
+
+paths:
+  /balance:
+    get:
+      summary: Get current wallet balance
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Wallet balance retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  balance:
+                    type: number
+                    example: 1200.00
+        '401':
+          description: Unauthorized
+
+  /fund:
+    post:
+      summary: Add money to your wallet
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - amount
+              properties:
+                amount:
+                  type: number
+                  example: 500.00
+      responses:
+        '200':
+          description: Wallet funded
+        '400':
+          description: Invalid request
+
+  /debit:
+    post:
+      summary: Spend money from wallet
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - amount
+              properties:
+                amount:
+                  type: number
+                  example: 100.00
+      responses:
+        '200':
+          description: Amount debited
+        '400':
+          description: Insufficient balance or invalid amount
+
+  /transfer:
+    post:
+      summary: Transfer money to another user's wallet
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - receiverId
+                - amount
+              properties:
+                receiverId:
+                  type: integer
+                  example: 2
+                amount:
+                  type: number
+                  example: 300.00
+      responses:
+        '200':
+          description: Transfer completed
+        '400':
+          description: Transfer failed (e.g. insufficient funds)
+
+  /transactions:
+    get:
+      summary: Get transaction history for logged-in user
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: List of transactions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transactions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        userId:
+                          type: integer
+                          example: 1
+                        type:
+                          type: string
+                          enum: [fund, debit, transfer_in, transfer_out]
+                          example: fund
+                        amount:
+                          type: number
+                          example: 250.00
+                        details:
+                          type: string
+                          example: Self funded
+                        createdAt:
+                          type: string
+                          format: date-time
+        '401':
+          description: Unauthorized
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
