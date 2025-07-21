@@ -17,6 +17,7 @@ services:
         value: auth_db
       - key: JWT_SECRET
         value: ""   # ⚠️ Set this in Render Dashboard
+    rootDir: ./services/user-service
 
   - type: web
     name: wallet-service
@@ -38,6 +39,7 @@ services:
         value: ""   # ⚠️ Set this in Render Dashboard
       - key: RABBITMQ_URL
         value: ""   # ⚠️ Set this in Render Dashboard
+    rootDir: ./services/wallet-service
 
   - type: web
     name: notification-service
@@ -51,3 +53,4 @@ services:
         value: ""   # ⚠️ Set this in Render Dashboard
       - key: RABBITMQ_URL
         value: ""   # ⚠️ Set this in Render Dashboard
+    rootDir: ./services/wallet-service
