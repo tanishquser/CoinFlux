@@ -4,7 +4,7 @@ FROM node:18
 # 2. Set working directory
 WORKDIR /app
 
-COPY package*.json ./
+COPY package*.json /app
 
 # 3. Copy code to the container
 COPY . .
