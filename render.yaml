@@ -2,7 +2,7 @@ services:
   - type: web
     name: user-service
     env: docker
-    dockerfilePath: services/user-service/Dockerfile
+    dockerfilePath: ./services/user-service/Dockerfile
     plan: free
     envVars:
       - key: PORT
@@ -17,12 +17,11 @@ services:
         value: auth_db
       - key: JWT_SECRET
         value: ""   # ⚠️ Set this in Render Dashboard
-    rootDir: services/user-service
 
   - type: web
     name: wallet-service
     env: docker
-    dockerfilePath: services/wallet-service/Dockerfile
+    dockerfilePath: ./services/wallet-service/Dockerfile
     plan: free
     envVars:
       - key: PORT
@@ -39,12 +38,11 @@ services:
         value: ""   # ⚠️ Set this in Render Dashboard
       - key: RABBITMQ_URL
         value: ""   # ⚠️ Set this in Render Dashboard
-    rootDir: services/wallet-service
 
   - type: web
     name: notification-service
     env: docker
-    dockerfilePath: services/notification-service/Dockerfile
+    dockerfilePath: ./services/notification-service/Dockerfile
     plan: free
     envVars:
       - key: MAIL_USER
@@ -53,4 +51,3 @@ services:
         value: ""   # ⚠️ Set this in Render Dashboard
       - key: RABBITMQ_URL
         value: ""   # ⚠️ Set this in Render Dashboard
-    rootDir: services/notification-service
