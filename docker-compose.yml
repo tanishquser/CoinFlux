@@ -1,22 +1,22 @@
 version: '3.8'
 services:
-  mysql:
-    image: mysql:8
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: fintech
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
+  # mysql:
+  #   image: mysql:8
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #     MYSQL_DATABASE: fintech
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - mysql_data:/var/lib/mysql
   user-service:
     build: ./services/user-service
     ports:
       - "3001:3001"
     env_file:
       - ./services/user-service/.env
-    depends_on:
-      - mysql
+    # depends_on:
+    #   - mysql
     restart: always
 
   wallet-service:
@@ -25,14 +25,14 @@ services:
       - "3002:3002"
     env_file:
       - ./services/wallet-service/.env
-    depends_on:
-      - mysql
+    # depends_on:
+    #   - mysql
 
-  rabbitmq:
-    image: rabbitmq:3-management
-    ports:
-      - "5672:5672"
-      - "15672:15672" # Web UI
+  # rabbitmq:
+  #   image: rabbitmq:3-management
+  #   ports:
+  #     - "5672:5672"
+  #     - "15672:15672" # Web UI
 
   notification-service:
     build:
@@ -41,8 +41,8 @@ services:
       - "3004:3004"
     env_file:
       - ./services/notification-service/.env
-    depends_on:
-      - rabbitmq
+    # depends_on:
+    #   - rabbitmq
     restart: always
 
 volumes:

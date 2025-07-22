@@ -1,5 +1,16 @@
 const { Sequelize } = require('sequelize');
 
-const DATABASE_URL = `postgres:[${process.env.DB_PASSWORD}]@db.usghgpcjuvcjhijoiwlx.supabase.co:5432/postgres`;
-const sequelize = new Sequelize(DATABASE_URL);
+const sequelize = new Sequelize(
+  `postgresql://postgres.usghgpcjuvcjhijoiwlx:${process.env.DB_PASSWORD}@aws-0-ap-south-1.pooler.supabase.com:5432/postgres`,
+  {
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
+  }
+);
+
 module.exports = sequelize;
