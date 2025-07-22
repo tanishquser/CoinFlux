@@ -4,7 +4,7 @@ services:
     env: docker
     plan: free
     dockerfilePath: Dockerfile
-    envVarsGroup: Coinflux-1
+    envVarGroups: Coinflux-1
     rootDir: services/fintech-db/
 
   - type: web
@@ -12,7 +12,7 @@ services:
     env: docker
     dockerfilePath: Dockerfile
     plan: free
-    envVarsGroup: Coinflux-1
+    envVarGroups: Coinflux-1
     rootDir: services/user-service/
 
   - type: web
@@ -21,7 +21,7 @@ services:
     dockerfilePath: Dockerfile
     plan: free
     rootDir: services/wallet-service/
-    envVarsGroup: Coinflux-1
+    envVarGroups: Coinflux-1
 
   - type: web
     name: notification-service
@@ -29,4 +29,4 @@ services:
     dockerfilePath: Dockerfile
     plan: free
     rootDir: services/notification-service/
-    envVarsGroup: Coinflux-1
+    envVarGroups: Coinflux-1
