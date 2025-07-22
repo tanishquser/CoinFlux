@@ -1,3 +1,11 @@
+databases:
+  - name: fintech
+    databaseName: fintech
+    user: root
+    plan: free
+    ipAllowList: 0.0.0.0/0
+    mysql: true
+
 services:
   - type: web
     name: user-service
@@ -6,16 +14,22 @@ services:
     plan: free
     rootDir: services/user-service/
     envVars:
-      - key: PORT
-        value: 3001
       - key: DB_HOST
-        value: ""
+        fromDatabase:
+          name: fintech
+          property: host
       - key: DB_USER
-        value: ""
+        fromDatabase:
+          name: fintech
+          property: root
       - key: DB_PASS
-        value: ""
+        fromDatabase:
+          name: fintech
+          property: password
       - key: DB_NAME
-        value: auth_db
+        fromDatabase:
+          name: fintech
+          property: fintech
       - key: JWT_SECRET
         value: ""
 
