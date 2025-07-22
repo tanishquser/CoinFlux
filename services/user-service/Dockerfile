@@ -4,7 +4,7 @@ FROM node:18
 # 2. Set working directory
 WORKDIR /app
 
-COPY package*.json ./
+COPY services/user-service/package*.json ./
 
 # 3. Install dependencies
 RUN npm install
