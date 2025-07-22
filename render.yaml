@@ -1,6 +1,6 @@
 services:
-  - type: background
-    name: mysql-db
+  - type: pserv
+    name: fintech-db
     env: docker
     plan: free
     dockerfilePath: Dockerfile
