@@ -9,21 +9,22 @@ services:
       - key: PORT
         value: 3001
       - key: DB_HOST
-        value: ""   # ⚠️ Set this in Render Dashboard
+        value: ""
       - key: DB_USER
-        value: ""   # ⚠️ Set this in Render Dashboard
+        value: ""
       - key: DB_PASS
-        value: ""   # ⚠️ Set this in Render Dashboard
+        value: ""
       - key: DB_NAME
         value: auth_db
       - key: JWT_SECRET
-        value: ""   # ⚠️ Set this in Render Dashboard
+        value: ""
 
   - type: web
     name: wallet-service
     env: docker
-    dockerfilePath: ./services/wallet-service/Dockerfile
+    dockerfilePath: Dockerfile
     plan: free
+    rootDir: services/wallet-service/
     envVars:
       - key: PORT
         value: 3002
@@ -43,8 +44,9 @@ services:
   - type: web
     name: notification-service
     env: docker
-    dockerfilePath: ./services/notification-service/Dockerfile
+    dockerfilePath: Dockerfile
     plan: free
+    rootDir: services/notification-service/
     envVars:
       - key: MAIL_USER
         value: ""   # ⚠️ Set this in Render Dashboard
