@@ -1,18 +1,5 @@
 const { Sequelize } = require('sequelize');
-require('dotenv').config();
 
-const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
-  host: process.env.DB_HOST,
-  dialect: 'mysql',
-  retry: {
-    max: 10,     // try 10 times
-  },
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  }
-});
-
+const DATABASE_URL = `postgres:[${process.env.DB_PASSWORD}]@db.usghgpcjuvcjhijoiwlx.supabase.co:5432/postgres`;
+const sequelize = new Sequelize(DATABASE_URL);
 module.exports = sequelize;

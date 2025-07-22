@@ -1,12 +1,4 @@
 services:
-  - type: web
-    name: fintech-db
-    env: docker
-    dockerfilePath: Dockerfile
-    plan: free
-    rootDir: services/fintech-db/
-    envVars:
-      - fromGroup: Coinflux-1
 
   - type: web
     name: user-service
