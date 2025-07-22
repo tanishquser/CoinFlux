@@ -2,8 +2,9 @@ services:
   - type: web
     name: user-service
     env: docker
-    dockerfilePath: ./services/user-service/Dockerfile
+    dockerfilePath: Dockerfile
     plan: free
+    rootDir: services/user-service/
     envVars:
       - key: PORT
         value: 3001
