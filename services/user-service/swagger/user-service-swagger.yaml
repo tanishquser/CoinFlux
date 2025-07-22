@@ -7,6 +7,8 @@ info:
 servers:
   - url: http://localhost:3001
     description: Local development server
+  - url: https://user-service-nfx3.onrender.com
+    description: Render server    
 
 paths:
   /api/auth/register:
