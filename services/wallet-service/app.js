@@ -45,7 +45,7 @@ const connectWithRetry = async (retries = 5, delay = 5000) => {
 
 connectWithRetry();
 
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.WALLET_SERVICE_PORT || 3002;
 app.listen(PORT, () => {
   console.log(`🚀 Wallet Service running at http://localhost:${PORT}`);
 });

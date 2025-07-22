@@ -1,37 +1,19 @@
-databases:
-  - name: fintech
-    databaseName: fintech
-    user: root
-    plan: free
-    ipAllowList: 0.0.0.0/0
-    mysql: true
-
 services:
+  - type: background
+    name: mysql-db
+    env: docker
+    plan: free
+    dockerfilePath: Dockerfile
+    envVarsGroup: Coinflux-1
+    rootDir: services/fintech-db/
+
   - type: web
     name: user-service
     env: docker
     dockerfilePath: Dockerfile
     plan: free
+    envVarsGroup: Coinflux-1
     rootDir: services/user-service/
-    envVars:
-      - key: DB_HOST
-        fromDatabase:
-          name: fintech
-          property: host
-      - key: DB_USER
-        fromDatabase:
-          name: fintech
-          property: root
-      - key: DB_PASS
-        fromDatabase:
-          name: fintech
-          property: password
-      - key: DB_NAME
-        fromDatabase:
-          name: fintech
-          property: fintech
-      - key: JWT_SECRET
-        value: ""
 
   - type: web
     name: wallet-service
@@ -39,21 +21,7 @@ services:
     dockerfilePath: Dockerfile
     plan: free
     rootDir: services/wallet-service/
-    envVars:
-      - key: PORT
-        value: 3002
-      - key: DB_HOST
-        value: ""   # ⚠️ Set this in Render Dashboard
-      - key: DB_USER
-        value: ""   # ⚠️ Set this in Render Dashboard
-      - key: DB_PASS
-        value: ""   # ⚠️ Set this in Render Dashboard
-      - key: DB_NAME
-        value: wallet_db
-      - key: JWT_SECRET
-        value: ""   # ⚠️ Set this in Render Dashboard
-      - key: RABBITMQ_URL
-        value: ""   # ⚠️ Set this in Render Dashboard
+    envVarsGroup: Coinflux-1
 
   - type: web
     name: notification-service
@@ -61,10 +29,4 @@ services:
     dockerfilePath: Dockerfile
     plan: free
     rootDir: services/notification-service/
-    envVars:
-      - key: MAIL_USER
-        value: ""   # ⚠️ Set this in Render Dashboard
-      - key: MAIL_PASS
-        value: ""   # ⚠️ Set this in Render Dashboard
-      - key: RABBITMQ_URL
-        value: ""   # ⚠️ Set this in Render Dashboard
+    envVarsGroup: Coinflux-1

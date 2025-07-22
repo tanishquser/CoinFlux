@@ -44,7 +44,7 @@ app.use('/api/auth', authRoutes);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Server
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.USER_SERVICE_PORT || 3001;
 app.listen(PORT, () => {
   console.log(`User Service running on http://localhost:${PORT}`);
 });
