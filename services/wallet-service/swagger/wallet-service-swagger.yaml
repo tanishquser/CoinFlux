@@ -7,7 +7,7 @@ info:
 servers:
   - url: http://localhost:3002/api/wallet
     description: Local development server
-  - url: https://wallet-service-ysdi.onrender.com
+  - url: https://wallet-service-ysdi.onrender.com/api/wallet
     description: Render server 
 paths:
   /balance:
