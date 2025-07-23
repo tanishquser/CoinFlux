@@ -6,7 +6,7 @@ dotenv.config();
 const startConsumer = async () => {
   const channel = await connectToRabbitMQ();
 
-  channel.consume(process.env.QUEUE_NAME, async (msg) => {
+  channel.consume(process.env.NOTIFICATION_QUEUE, async (msg) => {
     if (msg !== null) {
       try {
         const data = JSON.parse(msg.content.toString());
