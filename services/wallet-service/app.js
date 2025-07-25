@@ -5,9 +5,6 @@ dotenv.config();
 
 const sequelize = require('./config/db');
 const walletRoutes = require('./routes/wallet.routes');
-const swaggerUi = require('swagger-ui-express');
-const YAML = require('yamljs');
-const swaggerDocument = YAML.load('./swagger/wallet-service-swagger.yaml');
 
 // Load Models (important to sync them with DB)
 require('./models/wallet.model');
@@ -16,11 +13,9 @@ require('./models/transaction.model');
 // Use JSON body parser
 app.use(express.json());
 
-// Swagger docs
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Wallet routes
-app.use('/api/wallet', walletRoutes);
+app.use('/wallet', walletRoutes);
 
 // DB Connect & Sync with Retry
 const connectWithRetry = async (retries = 5, delay = 5000) => {

@@ -1,0 +1,107 @@
+openapi: 3.0.0
+info:
+  title: Wallet Service API
+  version: 1.0.0
+  description: API for managing user wallet actions (funding, balance, debit, transfer)
+
+tags:
+  - name: Wallet
+    description: Operations for managing wallet actions like balance check, add, and withdraw funds
+
+paths:
+  /wallet/balance:
+    get:
+      summary: Get current wallet balance
+      tags:
+        - Wallet
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Success
+        '401':
+          description: Unauthorized
+
+  /wallet/fund:
+    post:
+      summary: Add money to wallet
+      tags:
+        - Wallet
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  example: 500
+      responses:
+        '200':
+          description: Wallet funded
+        '400':
+          description: Invalid amount
+
+  /wallet/debit:
+    post:
+      summary: Spend money from wallet
+      tags:
+        - Wallet
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  example: 100
+      responses:
+        '200':
+          description: Amount debited
+        '400':
+          description: Insufficient balance
+
+  /wallet/transfer:
+    post:
+      summary: Transfer money to another user
+      tags:
+        - Wallet
+      description: |
+        Transfers money from the authenticated user to the specified receiver.
+
+        **Internal Notification Triggered:**
+        After a successful transfer, a notification is automatically sent to both the sender and receiver by the internal Notification Service.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                receiverId:
+                  type: integer
+                  example: 2
+                amount:
+                  type: number
+                  example: 200
+      responses:
+        '200':
+          description: Transfer successful
+        '400':
+          description: Error during transfer
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -2,9 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const authRoutes = require('./routes/auth.routes');
-const swaggerUi = require('swagger-ui-express');
-const YAML = require('yamljs');
-const swaggerDocument = YAML.load('./swagger/user-service-swagger.yaml');
 
 const sequelize = require('./config/db');
 const User = require('./models/user.model'); // Make sure model is loaded
@@ -38,10 +35,7 @@ connectWithRetry();
 app.use(express.json());
 
 // Routes
-app.use('/api/auth', authRoutes);
-
-// Swagger
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/user', authRoutes);
 
 // Server
 const PORT = process.env.USER_SERVICE_PORT || 3001;

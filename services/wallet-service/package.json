@@ -13,8 +13,6 @@
     "mysql2": "^3.9.0",
     "pg": "^8.16.3",
     "sequelize": "^6.35.1",
-    "swagger-ui-express": "^4.6.3",
-    "yamljs": "^0.3.0",
     "amqplib": "^0.10.3"
   },
   "devDependencies": {

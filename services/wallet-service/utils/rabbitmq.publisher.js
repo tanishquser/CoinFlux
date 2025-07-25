@@ -4,22 +4,22 @@ dotenv.config();
 
 let channel;
 
-const connectRabbit = async () => {
+const connectRabbit = async (queue) => {
   if (channel) return channel;
 
   const connection = await amqp.connect(process.env.RABBITMQ_URL);
   channel = await connection.createChannel();
-  await channel.assertQueue(process.env.NOTIFICATION_QUEUE, { durable: true });
+  await channel.assertQueue(queue, { durable: true });
 
   return channel;
 };
 
 const publishToQueue = async (messageObj) => {
   try {
-    const channel = await connectRabbit();
+    const channel = await connectRabbit(messageObj.queueName);
     channel.sendToQueue(
-      process.env.NOTIFICATION_QUEUE,
-      Buffer.from(JSON.stringify(messageObj)),
+      messageObj.queueName,
+      Buffer.from(JSON.stringify(messageObj.payload)),
       { persistent: true }
     );
     console.log('📤 Message published to queue');

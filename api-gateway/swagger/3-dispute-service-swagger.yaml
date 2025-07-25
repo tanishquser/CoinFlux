@@ -1,0 +1,87 @@
+openapi: 3.0.0
+info:
+  title: Dispute Service API
+  version: 1.0.0
+  description: APIs to manage transaction disputes.
+
+tags:
+  - name: Disputes
+    description: Operations related to transaction disputes
+
+paths:
+  /dispute/disputes:
+    post:
+      summary: Raise a new dispute
+      tags: [Disputes]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+                - transactionId
+                - reason
+              properties:
+                userId:
+                  type: string
+                transactionId:
+                  type: string
+                reason:
+                  type: string
+      responses:
+        201:
+          description: Dispute raised successfully
+        400:
+          description: Invalid input
+      security:
+        - bearerAuth: []
+
+    get:
+      summary: Get all disputes for authenticated user
+      tags: [Disputes]
+      responses:
+        200:
+          description: List of disputes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Dispute'
+      security:
+        - bearerAuth: []
+
+  /dispute/disputes/{id}:
+    patch:
+      summary: Update dispute status (e.g., auto-review job)
+      tags: [Disputes]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: [pending, in_review, resolved]
+      responses:
+        200:
+          description: Dispute status updated
+        404:
+          description: Dispute not found
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

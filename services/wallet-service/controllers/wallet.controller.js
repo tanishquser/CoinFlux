@@ -89,9 +89,12 @@ const transferFunds = async (req, res) => {
     await t.commit();
 
     await publishToQueue({
-      email: 'tanxyz53@gmail.com',
-      subject: 'Funds Transferred',
-      message: `You sent ₹${amount} to user ${receiverId}`,
+      queueName: process.env.NOTIFICATION_QUEUE,
+      payload: {
+        email: 'tanxyz53@gmail.com',
+        subject: 'Funds Transferred',
+        message: `You sent ₹${amount} to user ${receiverId}`,
+      }
     });
 
     res.json({ message: 'Transfer successful' });
@@ -99,6 +102,16 @@ const transferFunds = async (req, res) => {
   } catch (err) {
     await t.rollback();
     console.log(err);
+    await publishToQueue({
+      queueName: process.env.DISPUTE_QUEUE,
+      payload: {
+        senderId,
+        receiverId,
+        amount,
+        reason: err.message,
+        timestamp: new Date().toISOString()
+      }
+    });
     res.status(400).json({ message: err.message });
   }
 };

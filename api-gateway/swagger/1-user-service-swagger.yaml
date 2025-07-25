@@ -4,18 +4,16 @@ info:
   version: 1.0.0
   description: API for user registration and login in the Fintech Wallet.
 
-servers:
-  - url: http://localhost:3001
-    description: Local development server
-  - url: https://user-service-nfx3.onrender.com
-    description: Render server    
+tags:
+  - name: Users
+    description: Operations related to user registration, login, and authentication  
 
 paths:
-  /api/auth/register:
+  /user/register:
     post:
       summary: Register a new user
       tags:
-        - Auth
+        - Users
       requestBody:
         required: true
         content:
@@ -46,11 +44,11 @@ paths:
         '409':
           description: Email already exists
 
-  /api/auth/login:
+  /user/login:
     post:
       summary: Login and receive a JWT token
       tags:
-        - Auth
+        - Users
       requestBody:
         required: true
         content:

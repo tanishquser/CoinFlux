@@ -26,3 +26,21 @@ services:
     rootDir: services/notification-service/
     envVars:
       - fromGroup: Coinflux-1
+
+  - type: web
+    name: dispute-service
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: free
+    rootDir: services/dispute-service/
+    envVars:
+      - fromGroup: Coinflux-1
+
+  - type: web
+    name: api-gateway
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: free
+    rootDir: api-gateway/
+    envVars:
+      - fromGroup: Coinflux-1
