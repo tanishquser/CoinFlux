@@ -1,99 +1,62 @@
-#  Coinflux – Microservices-Based Fintech Wallet
+# Coinflux Microservices (API Gateway ✅)
 
-**Coinflux** is a microservices-driven fintech wallet system designed for scalable and modular architecture. It features dedicated services for user authentication, wallet management, and notification handling through a message queue.
+## 🏗️ Overview
 
----
+A production-grade microservice architecture for a Fintech Wallet application:
 
-##  Microservices Overview
+- **API Gateway** centralizes access and documentation  
+- **User Service** handles registration & login (JWT authentication)  
+- **Wallet Service** manages user wallet operations (balance, fund, debit, transfer)  
+- **Dispute Service** for handling transaction disputes  
+- **Notification Service** (internal) triggers email notification via RabbitMQ
 
-###  User Service
-- Handles authentication and user management
-- Exposes APIs for user registration, login, and profile management
+Live docs at: https://api-gateway-ptix.onrender.com/api-docs
 
-###  Wallet Service
-- Manages wallet balances, transactions, and history
-- Includes endpoints for deposit, withdrawal, and transfers
+## 🚀 Quick Start (Production / Render)
 
-###  Notification Service
-- Sends email notifications via Mailtrap
-- Listens to RabbitMQ events (e.g., user registration or transaction alerts)
+1. Visit the URL above to explore all API endpoints via Swagger.  
+2. Authenticate via `/user/login` → copy JWT.  
+3. Click the **Authorize** button in Swagger UI → paste `Bearer <JWT>`.  
+4. Call Wallet and Dispute APIs like:
+   - `/wallet/transfer`  
+   - `/wallet/balance`  
+   - `/dispute/disputes`
 
----
-
-##  Project Structure
-
-```
-coinflux/
-│
-├── user-service/               # Authentication and user management
-│   ├── Dockerfile
-│   └── ...
-│
-├── wallet-service/            # Wallet and transaction logic
-│   ├── Dockerfile
-│   └── ...
-│
-├── notification-service/      # Email notification handler
-│   ├── Dockerfile
-│   └── ...
-│
-└── docker-compose.yml         # Orchestration of services with RabbitMQ
-```
-
----
-
-## 🐳 Local Development with Docker Compose
-
-### Prerequisites
-
-- Ensure Docker is installed and running  
-   [Download Docker](https://www.docker.com/products/docker-desktop)
-
-### Start All Services
-
-Run the following command in the root `coinflux/` directory:
+## 🔧 Dev Setup (Local Docker)
 
 ```bash
 docker-compose up --build
 ```
 
-This will spin up all services:
-- User Service
-- Wallet Service
-- Notification Service
-- RabbitMQ
+**Available endpoints:**
 
----
+| Service          | URL (Local)                |
+|------------------|----------------------------|
+| API Gateway      | http://localhost:8080      |
+| User Service     | http://localhost:3001      |
+| Wallet Service   | http://localhost:3002      |
+| Dispute Service  | http://localhost:3003      |
+| Notification     | (runs internally via RabbitMQ) |
 
-## Live Services on Render
+Use `docker-compose up wallet-service` to spin up just that service for focused development.
 
-Test the services live using the following Render-hosted URLs:
+## 📚 Tech Stack
 
-- **User Service** – [Swagger Docs](#)
-- **Wallet Service** – [Swagger Docs](#)
-- **Notification Service** – Internal Use Only
+| Layer           | Tech                                    |
+|----------------|-----------------------------------------|
+| API Gateway     | Express, `http-proxy-middleware`, Swagger-jsdoc/UI |
+| Services        | Node.js (Express), Sequelize (MySQL), RabbitMQ |
+| Authentication  | JWT (Bearer tokens)                    |
+| Orchestration   | Docker Compose and Render deployment   |
 
----
+## 🔎 What It Demonstrates
 
-## Email Notifications (Internal)
+- Microservice architecture with container isolation  
+- API Gateway routing and unified documentation  
+- Database transactions with row locks → prevents race conditions  
+- Message queue integration for async notifications & dispute logging  
+- Secure sessionless authentication using JWT  
+- CI/CD-friendly Docker-based deployment  
+- Developer-friendly flow through Swagger UI
 
-The Notification Service:
-- Is not exposed externally
-- Sends emails via **Mailtrap**
-- Listens for events on RabbitMQ (e.g., user signup or transaction alerts)
-
----
-
-## Tech Stack
-
-- **Backend:** Node.js + Express  
-- **Database:** MySQL (hosted on Render)  
-- **ORM:** Sequelize  
-- **Messaging:** RabbitMQ  
-- **Docs:** Swagger  
-- **Containerization:** Docker + Docker Compose  
-
-
-## 📝 License
-
-This project is licensed under the MIT License.
+Enjoy 💼—built for developers and recruiters alike!
