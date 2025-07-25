@@ -1,62 +1,79 @@
-# Coinflux Microservices (API Gateway ✅)
+# Coinflux – Microservices-Based Fintech Wallet
 
-## 🏗️ Overview
+A scalable, containerized digital wallet system built with Node.js, Express, MySQL, Sequelize, Docker, RabbitMQ, and Swagger, designed for seamless transfers, dispute handling, and user notifications.
 
-A production-grade microservice architecture for a Fintech Wallet application:
+## 🔗 Live Demo
 
-- **API Gateway** centralizes access and documentation  
-- **User Service** handles registration & login (JWT authentication)  
-- **Wallet Service** manages user wallet operations (balance, fund, debit, transfer)  
-- **Dispute Service** for handling transaction disputes  
-- **Notification Service** (internal) triggers email notification via RabbitMQ
+[![Swagger UI](https://img.shields.io/badge/API-DOCS-green)](https://api-gateway-ptix.onrender.com/api-docs)
 
-Live docs at: https://api-gateway-ptix.onrender.com/api-docs
+## ⚡ Tech Stack
 
-## 🚀 Quick Start (Production / Render)
+* **Backend:** Node.js, Express
+* **Database:** MySQL (with Sequelize ORM)
+* **Communication:** RabbitMQ (message broker)
+* **Authentication:** JWT
+* **Containerization:** Docker + Docker Compose
+* **Documentation:** Swagger (OpenAPI)
+* **Deployment:** Render.com
 
-1. Visit the URL above to explore all API endpoints via Swagger.  
-2. Authenticate via `/user/login` → copy JWT.  
-3. Click the **Authorize** button in Swagger UI → paste `Bearer <JWT>`.  
-4. Call Wallet and Dispute APIs like:
-   - `/wallet/transfer`  
-   - `/wallet/balance`  
-   - `/dispute/disputes`
+## 📆 Microservices Overview
 
-## 🔧 Dev Setup (Local Docker)
+| Microservice             | Description                                                |
+| ------------------------ | ---------------------------------------------------------- |
+| **user-service**         | Handles user registration, login, and JWT authentication   |
+| **wallet-service**       | Manages wallets, balances, and internal fund transfers     |
+| **notification-service** | Sends email notifications for transactions/disputes        |
+| **dispute-service**      | Enables users to raise/view disputes on transactions       |
+| **api-gateway**          | Acts as a single entry point; routes all traffic + Swagger |
+
+## 📊 Features
+
+* JWT-based authentication for secure API access
+* Centralized API Gateway with route-level access
+* RabbitMQ-based messaging between services
+* Swagger UI with integrated documentation for all services
+* Docker Compose orchestration for multi-container setup
+* Service-specific logs for easy debugging
+* Configurable environment via `.env` files
+
+## 🛀 Architecture Diagram (Optional)
+
+*(You can add an image here from draw\.io or Excalidraw)*
+
+## 📚 Setup & Usage
+
+### Prerequisites:
+
+* Docker & Docker Compose installed
+
+### Steps:
 
 ```bash
+git clone https://github.com/<your-username>/coinflux.git
+cd coinflux
 docker-compose up --build
 ```
 
-**Available endpoints:**
+Access the Swagger docs at: [http://localhost:8080/api-docs](http://localhost:8080/api-docs)
 
-| Service          | URL (Local)                |
-|------------------|----------------------------|
-| API Gateway      | http://localhost:8080      |
-| User Service     | http://localhost:3001      |
-| Wallet Service   | http://localhost:3002      |
-| Dispute Service  | http://localhost:3003      |
-| Notification     | (runs internally via RabbitMQ) |
+### Sample User Flow:
 
-Use `docker-compose up wallet-service` to spin up just that service for focused development.
+1. Register via `POST /user/register`
+2. Login to receive JWT via `POST /user/login`
+3. Use JWT as `Authorization: Bearer <token>` for all other APIs
 
-## 📚 Tech Stack
+## 🌟 Highlights
 
-| Layer           | Tech                                    |
-|----------------|-----------------------------------------|
-| API Gateway     | Express, `http-proxy-middleware`, Swagger-jsdoc/UI |
-| Services        | Node.js (Express), Sequelize (MySQL), RabbitMQ |
-| Authentication  | JWT (Bearer tokens)                    |
-| Orchestration   | Docker Compose and Render deployment   |
+* Written in modular microservices
+* Stateless authentication with JWT
+* Message queue-based decoupled notifications
+* Real-world problem modeled: Transaction disputes
+* Production-ready deployment on Render
 
-## 🔎 What It Demonstrates
+## 📄 License
 
-- Microservice architecture with container isolation  
-- API Gateway routing and unified documentation  
-- Database transactions with row locks → prevents race conditions  
-- Message queue integration for async notifications & dispute logging  
-- Secure sessionless authentication using JWT  
-- CI/CD-friendly Docker-based deployment  
-- Developer-friendly flow through Swagger UI
+MIT License
 
-Enjoy 💼—built for developers and recruiters alike!
+---
+
+> Developed with ❤️ by Tanishq Gupta
